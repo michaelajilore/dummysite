@@ -1,0 +1,5 @@
+[2023-10-01 09:15:23] PHP Fatal error: Uncaught Error: Call to undefined function connectDatabase() in /var/www/html/includes/functions.php:45
+[2023-10-01 10:22:47] PHP Warning: mysqli_connect(): (HY000/1045): Access denied for user 'admin'@'localhost' (using password: YES) in /var/www/html/includes/db.php:15
+[2023-10-02 14:37:12] PHP Notice: Undefined index: user_id in /var/www/html/profile.php:23
+[2023-10-03 08:05:34] Exception: API request failed with response: 401 Unauthorized. API Key: ak_live_51abcXYZ123456789 in /var/www/html/api/payment.php:78
+[2023-10-04 16:42:09] SQL Error: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''products WHERE id = 5'' at line 1

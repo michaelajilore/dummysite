@@ -1,0 +1,74 @@
+<?php
+// Installation script backup - shouldn't be accessible
+// Database setup
+$dbSetup = [
+    'server' => 'localhost',
+    'username' => 'admin',
+    'password' => 'insecure_password123',
+    'database' => 'company_db'
+];
+
+// Admin account setup
+$adminSetup = [
+    'username' => 'admin',
+    'password' => 'admin123',
+    'email' => 'admin@example.com'
+];
+
+// API keys setup
+$apiSetup = [
+    'stripe' => 'sk_live_51abcXYZ123456789',
+    'google_maps' => 'AIzaSyA1B2C3D4E5F6G7H8I9J0K1L2M3N4O5P6',
+    'mailchimp' => '8d3f5a2c6b9e7a4d1f2e5d8a7c4b9e6f3'
+];
+
+// Create database and tables
+function setupDatabase($config) {
+    $conn = new mysqli($config['server'], $config['username'], $config['password']);
+    
+    // Create database
+    $conn->query("CREATE DATABASE IF NOT EXISTS {$config['database']}");
+    
+    // Select database
+    $conn->select_db($config['database']);
+    
+    // Create users table
+    $conn->query("
+        CREATE TABLE IF NOT EXISTS users (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(50) NOT NULL,
+            password VARCHAR(255) NOT NULL,
+            email VARCHAR(100) NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ");
+    
+    // Create products table
+    $conn->query("
+        CREATE TABLE IF NOT EXISTS products (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            description TEXT,
+            price DECIMAL(10,2) NOT NULL,
+            stock INT NOT NULL DEFAULT 0
+        )
+    ");
+    
+    return $conn;
+}
+
+// Output installation information - would be visible in the .bak file
+echo "Installation Started...\n";
+$conn = setupDatabase($dbSetup);
+echo "Database Created Successfully\n";
+
+// Create admin user
+$conn->query("INSERT INTO users (username, password, email) VALUES (
+    '{$adminSetup['username']}',
+    '{$adminSetup['password']}',
+    '{$adminSetup['email']}'
+)");
+echo "Admin User Created\n";
+
+echo "Installation Complete!\n";
+?>
